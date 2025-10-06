@@ -1,0 +1,63 @@
+syntax = "proto2";
+
+package com.google.chrome.dongle.imax.wallpaper2.protos;
+
+option java_outer_classname = "ImaxWallpaperProto";
+
+message Attribution {
+  optional string text = 1;
+}
+
+message Image {
+  enum ActionType {
+    UNKNOWN = 0;
+    EXPLORE = 1;
+    LIVE_CASE = 2;
+  }
+
+  optional int64 asset_id = 1;
+  optional string image_url = 2;
+  optional string action_url = 3;
+  repeated Attribution attribution = 4;
+  optional ActionType type = 5;
+}
+
+message Collection {
+  optional string collection_id = 1;
+  optional string collection_name = 2;
+  repeated Image preview = 3;
+}
+
+message GetCollectionsRequest {
+  optional string language = 1;
+  optional string region = 2;
+  repeated string filtering_label = 3;
+}
+
+message GetCollectionsResponse {
+  repeated Collection collections = 1;
+}
+
+message GetImageFromCollectionRequest {
+  repeated string collection_ids = 1;
+  optional string resume_token = 2;
+  optional string language = 3;
+  optional string region = 4;
+  repeated string filtering_label = 5;
+}
+
+message GetImageFromCollectionResponse {
+  optional Image image = 1;
+  optional string resume_token = 2;
+}
+
+message GetImagesInCollectionRequest {
+  optional string collection_id = 1;
+  optional string language = 2;
+  optional string region = 3;
+  repeated string filtering_label = 4;
+}
+
+message GetImagesInCollectionResponse {
+  repeated Image images = 1;
+}
